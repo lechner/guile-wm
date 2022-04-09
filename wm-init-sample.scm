@@ -27,18 +27,19 @@
 ;; wm-modules: simple-focus window-cycle tinywm
 
 ;; Command helpers
-(define-command (emacs) (shell-command "emacsclient -c"))
-(define-command (conkeror) (shell-command "conkeror"))
+(define-command (emacs) (shell-command "emacs"))
+(define-command (conkeror) (shell-command "firefox"))
 
 ;; Multi-monitor setup.
-(set-resolution! "VGA-0" 1680 1050)
-(set-resolution! "DVI-0" 1920 1200)
-(set-offset! "DVI-0" 1680 0)
+;; (set-resolution! "VGA-0" 1680 1050)
+;; (set-resolution! "DVI-0" 1920 1200)
+;; (set-offset! "DVI-0" 1680 0)
 
-;; Root key binding (I use xmodmap to map super key to F20. Maybe that
-;; should be built into this as well.)
-
-;;  Default root key is C-t
+;; Root key binding
+;; Default root key is C-t
+(shell-command "xmodmap -e 'clear mod4'")
+(shell-command "xmodmap -e 'clear mod5'")
+(shell-command "xmodmap -e 'keycode 133 = F20'")
 (set! (root-key) 'F20)
 
 ;; simple-focus simply draws a thin border around the focused window
@@ -52,10 +53,10 @@
 (set! (keymap-cursor) 'draped-box)
 
 ;; Set fonts
-(let ((proggy "-*-proggyclean-*-*-*-*-*-*-*-*-*-70-*-*"))
-  (set! minibuffer-font proggy)
-  (set! menu-font proggy)
-  (set! message-font proggy))
+(let ((terminus "-xos4-terminus-medium-r-normal--12*"))
+  (set! minibuffer-font terminus)
+  (set! menu-font terminus)
+  (set! message-font terminus))
 
 ;; Start repl server on the default port
 (start-wm-repl)
@@ -66,7 +67,7 @@
   (colon "prompt-for-eval")
   (bang "prompt-for-shell-command")
   (C-q "quit")
-  (f "conkeror")
+  (f "firefox")
   (F "fullscreen")
   (e "emacs")
   (w "select-window")
@@ -74,8 +75,8 @@
   (n "window-cycle")
   (tab "visible-window-cycle")
   (c "shell-command xterm -e telnet localhost 37146")
-  (t "shell-command xterm"))
+  (t "shell-command alacritty"))
 
 ;; Startup programs
-(shell-command "emacs --daemon")
+(shell-command "emacs")
 (shell-command (format #f "xterm -e 'tail /tmp/guile-wm.log -f'"))
