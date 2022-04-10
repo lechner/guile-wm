@@ -25,6 +25,7 @@
 ;; wm-modules: minibuffer repl randr fullscreen 
 ;; wm-modules: menu message window-menu time simple-reparent
 ;; wm-modules: simple-focus window-cycle tinywm
+;; wm-modules: tiling
 
 ;; Command helpers
 (define-command (emacs) (shell-command "emacs"))

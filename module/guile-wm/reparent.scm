@@ -21,6 +21,7 @@
   #:use-module (xcb event-loop)
   #:use-module (guile-wm draw)
   #:use-module (guile-wm focus)
+  #:use-module (guile-wm log)
   #:use-module (guile-wm icccm)
   #:use-module (guile-wm shared)
   #:use-module (guile-wm redirect))
@@ -40,7 +41,9 @@
 (define-public (reparented-windows)
   (define reparented
     (hash-map->list (lambda (k v) (make-xid k xwindow)) reparents))
-  (if (null? reparented) #f reparented))
+  (begin
+    (log! (format #f "in reparented-windows, reparented = ~a" reparented))
+    (if (null? reparented) #f reparented)))
 
 (define-public (window-obscured? win)
   (hashv-ref obscured (xid->integer win)))

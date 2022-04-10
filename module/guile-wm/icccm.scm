@@ -20,7 +20,8 @@
   #:use-module (xcb xml struct)
   #:use-module (xcb xml type)
   #:use-module (xcb xml xproto)
-  #:use-module (guile-wm shared))
+  #:use-module (guile-wm shared)
+  #:use-module (guile-wm log))
 
 (define max-length (- (expt 2 32) 1))
 (define-public (pre-defined-atom sym) (make-xid (xenum-ref atom sym) xatom))
@@ -61,7 +62,9 @@
   (define (is-top-level? attr-pair) 
     (and (eq? (xref (cdr attr-pair) 'map-state) 'viewable)
          (not (xref (cdr attr-pair) 'override-redirect))))
-  (map car (filter is-top-level? attribute-alist)))
+  (let ((result (map car (filter is-top-level? attribute-alist))))
+    (log! (format #f "in icccm, result = ~a" result))
+    result))
 
 (define-public (top-level-window? win)
   (let lp ((wins (top-level-windows)))

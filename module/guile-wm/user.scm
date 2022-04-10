@@ -23,3 +23,5 @@
   #:use-module (xcb xml)
   #:use-module (xcb xml xproto)
   #:use-module (xcb xml connection))
+
+(use-wm-modules tiling)

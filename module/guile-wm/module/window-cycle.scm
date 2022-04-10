@@ -21,6 +21,7 @@
   #:use-module (guile-wm reparent)
   #:use-module (guile-wm shared)
   #:use-module (guile-wm command)
+  #:use-module (guile-wm log)
   #:use-module (guile-wm focus))
 
 (define (pick-next-matching-window start all pred)
@@ -32,24 +33,31 @@
      (else (pick (cdr to-test))))))
 
 (define (basic-window-cycle pred)
+  (log! "in basic window cycle")
   (define windows (or (reparented-windows) (top-level-windows)))
   (with-replies ((focus get-input-focus))
-    (define old (xref focus 'focus))
-    (if (not (null? windows))
-        (if (not (memv (xid->integer old) (xenum-values input-focus)))
-            (and=> (let find-focus ((w windows))
-                     (cond
-                      ((null? w) #f)
-                      ((xid= (window-parent (car w)) old)
-                       (pick-next-matching-window w windows  pred))
-                      (else (find-focus (cdr w)))))
-                   set-focus)
-            (set-focus (car windows))))))
+                (define old (xref focus 'focus))
+                (log! (format #f "windows is ~a" windows))
+                (if (not (null? windows))
+                    (if (not (memv (xid->integer old) (xenum-values input-focus)))
+                        (and=> (let find-focus ((w windows))
+                                 (log! (format #f "find-focus is ~a and w is ~a" find-focus w))
+                                 (cond
+                                  ((null? w) #f)
+                                  ((xid= (window-parent (car w)) old)
+                                   (begin
+                                     (log! (format #f  "pick next ~a " (pick-next-matching-window w windows  pred)))
+                                     (pick-next-matching-window w windows  pred)))
+                                  (else (find-focus (cdr w)))))
+                               set-focus)
+                        (set-focus (car windows))))))
 
 (define-command (window-cycle)
   "Bring the bottom-most X window to the front and give it the input
 focus."
-  (basic-window-cycle (lambda (win) #t)))
+  (begin
+    (log! "in window cycle")
+    (basic-window-cycle (lambda (win) #t))))
 
 (define-command (visible-window-cycle)
   "Bring the bottom-most visible X window to the front and give it the

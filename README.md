@@ -8,7 +8,4 @@ building works the same as the original project, but it needs updates from my fo
 
 # current goals
 
-- add functionality to close windows (didn't see it in the existing code)
-- fix functionality to cycle windows (doesn't work for me currently)
-- add a titlebar
-- figure out/fix how to do tiling
+i'm working to address outstanding issues in this repository's issue tracker
