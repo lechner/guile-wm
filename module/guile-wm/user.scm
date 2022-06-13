@@ -22,6 +22,6 @@
   #:use-module (xcb event-loop)
   #:use-module (xcb xml)
   #:use-module (xcb xml xproto)
-  #:use-module (xcb xml connection))
+  #:use-module (xcb connection))
 
 (use-wm-modules tiling)

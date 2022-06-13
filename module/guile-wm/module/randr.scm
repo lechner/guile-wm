@@ -21,7 +21,7 @@
   #:use-module (xcb xml) 
   #:use-module (xcb event-loop) 
   #:use-module (xcb xml xproto)
-  #:use-module (xcb xml ext randr)
+  #:use-module (xcb xml randr)
   #:use-module (guile-wm command)
   #:use-module (guile-wm shared)
   #:use-module (guile-wm log)

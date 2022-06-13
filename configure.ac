@@ -20,9 +20,9 @@ GUILE_PROGS
 # breaking the build
 
 dnl GUILE_MODULE_REQUIRED([xcb xml])
+dnl GUILE_MODULE_REQUIRED([xcb struct])
 dnl GUILE_MODULE_REQUIRED([xcb xml xproto])
-dnl GUILE_MODULE_REQUIRED([xcb xml struct])
-dnl GUILE_MODULE_REQUIRED([xcb xml ext randr])
+dnl GUILE_MODULE_REQUIRED([xcb xml randr])
 dnl GUILE_MODULE_REQUIRED([xcb event-loop])
 
 AC_ARG_WITH([guile-site-dir],
